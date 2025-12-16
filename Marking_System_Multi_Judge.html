@@ -8467,6 +8467,7 @@
         <button type="button" class="btn" onclick="saveToLocalStorage(); showSaveIndicator()">שמור</button>
         <button type="button" class="btn" onclick="exportToCSV()">ייצא ל-Excel</button>
         <button type="button" class="btn" onclick="exportToJSON()">ייצא ל-JSON</button>
+        <button type="button" class="btn" onclick="copyScoresToClipboard()">העתק ל-Clipboard</button>
         <button type="button" class="btn btn-secondary" onclick="generateSummary()">צור סיכום כל השופטים</button>
         <button type="button" class="btn" onclick="showResetConfirmation()" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">איפוס כל הציונים</button>
     </div>
@@ -8764,6 +8765,73 @@
             link.href = URL.createObjectURL(blob);
             link.download = `scores_${currentJudge}_${new Date().toISOString().split('T')[0]}.json`;
             link.click();
+        }
+
+        function copyScoresToClipboard() {
+            const form = document.getElementById('markingForm');
+            const formData = new FormData(form);
+            const presentations = {};
+            
+            for (const [key, value] of formData.entries()) {
+                const parts = key.split('_');
+                const presentationId = parts[0] + '_' + parts[1];
+                
+                if (!presentations[presentationId]) {
+                    presentations[presentationId] = {
+                        name: document.getElementById(presentationId).querySelector('.presentation-name').textContent,
+                        scores: {},
+                        notes: ''
+                    };
+                }
+                
+                if (key.includes('notes')) {
+                    presentations[presentationId]['notes'] = value;
+                } else if (key.includes('criteria')) {
+                    const critNum = parts[parts.length - 1];
+                    const critName = criteriaNames[parseInt(critNum)] || 'Unknown';
+                    presentations[presentationId]['scores'][critName] = parseInt(value) || 1;
+                }
+            }
+            
+            const json = JSON.stringify({
+                judge: currentJudge,
+                judgeName: judgeNames[currentJudge] || currentJudge,
+                timestamp: new Date().toISOString(),
+                data: presentations
+            }, null, 2);
+            
+            copyText(json, '✅ הועתק! הדבק ב-WhatsApp/Email ושלח למארגן');
+        }
+
+        function copyText(text, successMessage) {
+            // Modern clipboard API (works on https sites like GitHub Pages / Netlify)
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert(successMessage || '✅ הועתק ללוח!');
+                }).catch(() => {
+                    fallbackCopyText(text, successMessage);
+                });
+                return;
+            }
+            fallbackCopyText(text, successMessage);
+        }
+
+        function fallbackCopyText(text, successMessage) {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            ta.style.top = '0';
+            document.body.appendChild(ta);
+            ta.focus();
+            ta.select();
+            try {
+                document.execCommand('copy');
+                alert(successMessage || '✅ הועתק ללוח!');
+            } catch (e) {
+                alert('❌ לא הצלחתי להעתיק אוטומטית. נסה Export ל-JSON.');
+            }
+            document.body.removeChild(ta);
         }
         
         function showResetConfirmation() {
