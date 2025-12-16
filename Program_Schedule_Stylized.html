@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circuits & Linear Systems: Student Lightning Talks-2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.95;
+            margin-top: 10px;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .session {
+            margin-bottom: 25px;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .session:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .session.industry {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-left-color: #e17055;
+        }
+        
+        .session.break {
+            background: linear-gradient(135deg, #a8e6cf 0%, #88d8a3 100%);
+            border-left-color: #00b894;
+            text-align: center;
+        }
+        
+        .time {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .session.industry .time {
+            color: #e17055;
+        }
+        
+        .session.break .time {
+            color: #00b894;
+        }
+        
+        .time::before {
+            content: "🕐";
+            margin-left: 10px;
+            font-size: 0.9em;
+        }
+        
+        .session.break .time::before {
+            content: "☕";
+        }
+        
+        .title {
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #2d3436;
+        }
+        
+        .session.industry .title {
+            color: #c0392b;
+        }
+        
+        .names {
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            color: #2d3436;
+            font-weight: 500;
+        }
+        
+        .task {
+            font-size: 0.95em;
+            color: #636e72;
+            font-style: italic;
+            margin-top: 5px;
+            padding-right: 15px;
+        }
+        
+        .guests-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+        
+        .guests-list li {
+            padding: 10px 15px;
+            margin: 8px 0;
+            background: rgba(255,255,255,0.7);
+            border-radius: 6px;
+            border-right: 3px solid #e17055;
+        }
+        
+        .break-text {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #00b894;
+            margin-top: 10px;
+        }
+        
+        .stats {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .stats-item {
+            display: inline-block;
+            margin: 0 20px;
+            padding: 10px 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .stats-item strong {
+            display: block;
+            font-size: 1.5em;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+            .session:hover {
+                transform: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.6em;
+            }
+            .content {
+                padding: 20px;
+            }
+            .session {
+                padding: 15px;
+            }
+        }
+
+        /* ===== Live "Now presenting" navigation ===== */
+        .nav-controls {
+            position: fixed;
+            bottom: 18px;
+            right: 18px;
+            z-index: 9999;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(0,0,0,0.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+            border-radius: 14px;
+            padding: 10px 12px;
+            backdrop-filter: blur(6px);
+        }
+
+        .nav-controls .nav-btn {
+            border: none;
+            border-radius: 12px;
+            padding: 10px 14px;
+            font-weight: 700;
+            cursor: pointer;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transition: transform 0.12s, box-shadow 0.12s;
+            box-shadow: 0 6px 16px rgba(102,126,234,0.35);
+        }
+        .nav-controls .nav-btn:active {
+            transform: translateY(1px);
+        }
+        .nav-controls .nav-btn.secondary {
+            background: #f1f3f5;
+            color: #333;
+            box-shadow: none;
+            border: 1px solid rgba(0,0,0,0.08);
+        }
+        .nav-controls .nav-status {
+            font-weight: 700;
+            color: #2d3436;
+            padding: 0 4px;
+            min-width: 92px;
+            text-align: center;
+        }
+
+        .session.talk-active {
+            background: linear-gradient(135deg, #e8f0ff 0%, #f4eaff 100%);
+            border-left-color: #764ba2;
+            box-shadow: 0 10px 30px rgba(118, 75, 162, 0.25);
+            transform: translateX(-6px);
+            position: relative;
+        }
+        .session.talk-active::after {
+            content: "▶ עכשיו";
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-weight: 800;
+            font-size: 0.85em;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.18);
+        }
+        .session.talk-done {
+            opacity: 0.72;
+        }
+
+        /* ===== Per-lecture timer ===== */
+        .timer-box {
+            margin-top: 14px;
+            padding: 12px 14px;
+            background: rgba(255,255,255,0.85);
+            border: 1px solid rgba(0,0,0,0.08);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .timer-display {
+            font-size: 1.5em;
+            font-weight: 900;
+            color: #2d3436;
+            letter-spacing: 0.5px;
+            min-width: 86px;
+            text-align: center;
+        }
+        .timer-meta {
+            font-size: 0.9em;
+            color: #636e72;
+            font-weight: 700;
+            min-width: 74px;
+            text-align: center;
+        }
+        .timer-controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+        .tbtn {
+            border: none;
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform 0.12s, filter 0.12s;
+            user-select: none;
+        }
+        .tbtn:active { transform: translateY(1px); }
+        .tbtn-start { background: linear-gradient(135deg, #00b894 0%, #00a085 100%); color: white; }
+        .tbtn-pause { background: #f1f3f5; color: #2d3436; border: 1px solid rgba(0,0,0,0.10); }
+        .tbtn-reset { background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; }
+        .timer-progress {
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(0,0,0,0.08);
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .timer-progress > div {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 999px;
+            transition: width 0.25s linear;
+        }
+        .timer-warning .timer-display { color: #e17055; }
+        .timer-overtime .timer-display { color: #c0392b; }
+
+        @media print {
+            .nav-controls { display: none !important; }
+            .timer-box, .timer-progress { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Circuits & Linear Systems</h1>
+            <div class="subtitle">Student Lightning Talks - 2025</div>
+            <div class="subtitle" style="margin-top: 10px; font-size: 1em;">19.12.2025</div>
+        </div>
+        <div class="content">
+            <div class="nav-controls" aria-label="Program navigation">
+                <button type="button" class="nav-btn secondary" id="btnPrev">◀ הקודם</button>
+                <div class="nav-status" id="navStatus">— / —</div>
+                <button type="button" class="nav-btn" id="btnNext">הבא ▶</button>
+                <button type="button" class="nav-btn secondary" id="btnClear">נקה</button>
+            </div>
+
+            <div class="session industry">
+                <div class="time">08:30 - 08:45</div>
+                <div class="title">Industry Guests Short Introduction</div>
+                <ul class="guests-list">
+                    <li><strong>Amichay Gross</strong> - Marine Edge</li>
+                    <li><strong>Alex Koyfman</strong> - Oracle</li>
+                    <li><strong>Roy Milshtein</strong> - Apple</li>
+                </ul>
+            </div>
+
+            <div class="session" data-talk-index="0" data-duration-seconds="240">
+                <div class="time">08:45 - 08:50</div>
+                <div class="names">אפיק אבגי, נועם פרידמן</div>
+                <div class="task">נושא: ייעול מעגלים עם תבנין</div>
+
+                <div class="timer-box" data-timer-for="0">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_0">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="0">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="0">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="0">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_0"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="1" data-duration-seconds="240">
+                <div class="time">08:50 - 08:55</div>
+                <div class="names">יואב כהן, גיא דהן ואוהד כותה</div>
+                <div class="task">נושא: דפיברילטור</div>
+
+                <div class="timer-box" data-timer-for="1">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_1">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="1">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="1">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="1">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_1"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="2" data-duration-seconds="240">
+                <div class="time">08:55 - 09:00</div>
+                <div class="names">עמית לביא</div>
+                <div class="task">נושא: חיבורי רכיבים</div>
+
+                <div class="timer-box" data-timer-for="2">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_2">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="2">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="2">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="2">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_2"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="3" data-duration-seconds="240">
+                <div class="time">09:00 - 09:05</div>
+                <div class="names">נדב נוי, גיא קופייב</div>
+                <div class="task">נושא: שיטות פתרון מעגלים</div>
+
+                <div class="timer-box" data-timer-for="3">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_3">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="3">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="3">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="3">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_3"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="4" data-duration-seconds="240">
+                <div class="time">09:05 - 09:10</div>
+                <div class="names">דניאל זיברובסקי עמית ברנדט</div>
+                <div class="task">נושא: שיטות פתרון מעגלים</div>
+
+                <div class="timer-box" data-timer-for="4">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_4">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="4">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="4">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="4">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_4"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="5" data-duration-seconds="240">
+                <div class="time">09:10 - 09:15</div>
+                <div class="names">ניב גלעדי, דור רפופורט, תומר דביר</div>
+                <div class="task">נושא: שיטת תבנין</div>
+
+                <div class="timer-box" data-timer-for="5">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_5">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="5">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="5">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="5">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_5"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="6" data-duration-seconds="240">
+                <div class="time">09:15 - 09:20</div>
+                <div class="names">ליאור בסר, ערן רפסון</div>
+                <div class="task">נושא: הספק במעגלי AC</div>
+
+                <div class="timer-box" data-timer-for="6">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_6">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="6">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="6">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="6">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_6"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="7" data-duration-seconds="240">
+                <div class="time">09:20 - 09:25</div>
+                <div class="names">נועה פלח, עידו בהט, אביב קדוש</div>
+                <div class="task">נושא: מגן ברקים mov</div>
+
+                <div class="timer-box" data-timer-for="7">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_7">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="7">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="7">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="7">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_7"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="8" data-duration-seconds="240">
+                <div class="time">09:25 - 09:30</div>
+                <div class="names">גל טובול, עופרי כהן, ענבר לוי</div>
+                <div class="task">נושא: מהפכה טכנולוגית לצד משבר בחשמל</div>
+
+                <div class="timer-box" data-timer-for="8">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_8">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="8">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="8">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="8">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_8"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="9" data-duration-seconds="240">
+                <div class="time">09:30 - 09:35</div>
+                <div class="names">שיר זיו, שלו אלפסי</div>
+                <div class="task">נושא: מעגלי ac</div>
+
+                <div class="timer-box" data-timer-for="9">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_9">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="9">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="9">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="9">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_9"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="10" data-duration-seconds="240">
+                <div class="time">09:35 - 09:40</div>
+                <div class="names">שיר ספטי, דין קרמן, הדס גולן</div>
+                <div class="task">נושא: תיאום עכבות-מעגלי ac</div>
+
+                <div class="timer-box" data-timer-for="10">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_10">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="10">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="10">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="10">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_10"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="11" data-duration-seconds="240">
+                <div class="time">09:40 - 09:45</div>
+                <div class="names">בן סמבירא</div>
+                <div class="task">נושא: הדגמת מעגל RLC</div>
+
+                <div class="timer-box" data-timer-for="11">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_11">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="11">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="11">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="11">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_11"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="12" data-duration-seconds="240">
+                <div class="time">09:45 - 09:50</div>
+                <div class="names">איתי כאכון, אייל ארנון, עונג דניאלי</div>
+                <div class="task">נושא: פונקציות סינגולריות </div>
+
+                <div class="timer-box" data-timer-for="12">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_12">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="12">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="12">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="12">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_12"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="13" data-duration-seconds="240">
+                <div class="time">09:50 - 09:55</div>
+                <div class="names">הדר עמרני, אלון אהרוני, רז טסה</div>
+                <div class="task">נושא: הספק ריאקטיבי ואקטיבי - חברת חשמל</div>
+
+                <div class="timer-box" data-timer-for="13">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_13">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="13">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="13">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="13">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_13"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="14" data-duration-seconds="240">
+                <div class="time">09:55 - 10:00</div>
+                <div class="names">עומר פסטרנק</div>
+                <div class="task">נושא: הספק ריאקטיבי ונפש האדם</div>
+
+                <div class="timer-box" data-timer-for="14">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_14">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="14">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="14">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="14">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_14"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="15" data-duration-seconds="240">
+                <div class="time">10:00 - 10:05</div>
+                <div class="names">מוניה הנו, דאניה עאמר</div>
+                <div class="task">נושא: מעגלים מסדר ראשון</div>
+
+                <div class="timer-box" data-timer-for="15">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_15">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="15">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="15">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="15">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_15"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="16" data-duration-seconds="240">
+                <div class="time">10:05 - 10:10</div>
+                <div class="names">עפרי גולדמן</div>
+                <div class="task">נושא: נוסעים על חשמל</div>
+
+                <div class="timer-box" data-timer-for="16">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_16">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="16">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="16">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="16">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_16"></div></div>
+        
+            </div>
+
+            <div class="session break">
+                <div class="time">10:10 - 10:20</div>
+                <div class="break-text">BREAK</div>
+            </div>
+
+            <div class="session" data-talk-index="17" data-duration-seconds="240">
+                <div class="time">10:20 - 10:25</div>
+                <div class="names">יובל לפיד, אוהד שחורי, ליה קידר</div>
+                <div class="task">נושא: vampire power</div>
+
+                <div class="timer-box" data-timer-for="17">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_17">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="17">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="17">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="17">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_17"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="18" data-duration-seconds="240">
+                <div class="time">10:25 - 10:30</div>
+                <div class="names">ניקיטה זסלבסקי, נדב גלבוע</div>
+                <div class="task">נושא: מעגלי dc</div>
+
+                <div class="timer-box" data-timer-for="18">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_18">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="18">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="18">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="18">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_18"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="19" data-duration-seconds="240">
+                <div class="time">10:30 - 10:35</div>
+                <div class="names">שיר בן עקיבא, תומר פן, הראל ארטמן</div>
+                <div class="task">נושא: מעגלים מסדר שני</div>
+
+                <div class="timer-box" data-timer-for="19">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_19">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="19">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="19">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="19">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_19"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="20" data-duration-seconds="240">
+                <div class="time">10:35 - 10:40</div>
+                <div class="names">אלון האס, רז כהן</div>
+                <div class="task">נושא: מעגלי ac </div>
+
+                <div class="timer-box" data-timer-for="20">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_20">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="20">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="20">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="20">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_20"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="21" data-duration-seconds="240">
+                <div class="time">10:40 - 10:45</div>
+                <div class="names">לירן נחמיאס, דקל רוט</div>
+                <div class="task">נושא: האם אני נגד או קבל? </div>
+
+                <div class="timer-box" data-timer-for="21">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_21">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="21">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="21">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="21">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_21"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="22" data-duration-seconds="240">
+                <div class="time">10:45 - 10:50</div>
+                <div class="names">ירון אבי יצחק, משב מנלה, ניר מירן</div>
+                <div class="task">נושא: מעגלי LC (מעגלים מסדר שני)</div>
+
+                <div class="timer-box" data-timer-for="22">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_22">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="22">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="22">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="22">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_22"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="23" data-duration-seconds="240">
+                <div class="time">10:50 - 10:55</div>
+                <div class="names">קורל כץ, דנה כפכפי</div>
+                <div class="task">נושא: The Flashmob</div>
+
+                <div class="timer-box" data-timer-for="23">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_23">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="23">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="23">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="23">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_23"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="24" data-duration-seconds="240">
+                <div class="time">10:55 - 11:00</div>
+                <div class="names">אביתר בבאי, לירן בדור, עמר אגא</div>
+                <div class="task">נושא: שיטת תבנין</div>
+
+                <div class="timer-box" data-timer-for="24">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_24">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="24">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="24">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="24">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_24"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="25" data-duration-seconds="240">
+                <div class="time">11:00 - 11:05</div>
+                <div class="names">יזן סולטאן, עבד אלרחמאן דאהר</div>
+                <div class="task">נושא: איך מטען טלפון הופך AC ל-DC? </div>
+
+                <div class="timer-box" data-timer-for="25">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_25">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="25">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="25">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="25">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_25"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="26" data-duration-seconds="240">
+                <div class="time">11:05 - 11:10</div>
+                <div class="names">טמיר פלד, גלעד קיש, גפן אורנשטיין</div>
+                <div class="task">נושא: סופרפוזיציה</div>
+
+                <div class="timer-box" data-timer-for="26">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_26">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="26">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="26">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="26">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_26"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="27" data-duration-seconds="240">
+                <div class="time">11:10 - 11:15</div>
+                <div class="names">הדר גולדשטיין, ליאל גורוביץ׳, גיל בר אור</div>
+                <div class="task">נושא: מעגלים מסדר שני- סוגי ריסון</div>
+
+                <div class="timer-box" data-timer-for="27">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_27">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="27">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="27">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="27">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_27"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="28" data-duration-seconds="240">
+                <div class="time">11:15 - 11:20</div>
+                <div class="names">שחר אברהמי, יואב סמיונוביץ, מתן מינסקי</div>
+                <div class="task">נושא: חיבורי רכיבים</div>
+
+                <div class="timer-box" data-timer-for="28">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_28">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="28">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="28">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="28">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_28"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="29" data-duration-seconds="240">
+                <div class="time">11:20 - 11:25</div>
+                <div class="names">ירון נחשון, עידו מינץ לוי, שחר רמי</div>
+                <div class="task">נושא: סופרפוזיציה</div>
+
+                <div class="timer-box" data-timer-for="29">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_29">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="29">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="29">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="29">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_29"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="30" data-duration-seconds="240">
+                <div class="time">11:25 - 11:30</div>
+                <div class="names">מאור פרץ, ניר תאיר נגה, רועי קורן</div>
+                <div class="task">נושא: קונבולוציה</div>
+
+                <div class="timer-box" data-timer-for="30">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_30">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="30">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="30">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="30">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_30"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="31" data-duration-seconds="240">
+                <div class="time">11:30 - 11:35</div>
+                <div class="names">עומר בהרל, אוהד חפץ, עפרי אביב</div>
+                <div class="task">נושא: מעגלי ac מודל פשטני של פילטר</div>
+
+                <div class="timer-box" data-timer-for="31">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_31">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="31">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="31">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="31">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_31"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="32" data-duration-seconds="240">
+                <div class="time">11:35 - 11:40</div>
+                <div class="names">נועם כץ, נדב ורניק, ירין גולדנברג</div>
+                <div class="task">נושא: תדר תהודה - הספק מקסימלי </div>
+
+                <div class="timer-box" data-timer-for="32">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_32">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="32">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="32">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="32">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_32"></div></div>
+        
+            </div>
+
+            <div class="session" data-talk-index="33" data-duration-seconds="240">
+                <div class="time">11:40 - 11:45</div>
+                <div class="names">סתיו צינו, שקד בוזי, יונתן בן בסט</div>
+                <div class="task">נושא: אוזניות מבטלות רעשים. האמנם?</div>
+
+                <div class="timer-box" data-timer-for="33">
+                    <div class="timer-meta">טיימר</div>
+                    <div class="timer-display" id="timer_display_33">04:00</div>
+                    <div class="timer-controls">
+                        <button type="button" class="tbtn tbtn-start" data-action="start" data-talk="33">▶ התחל</button>
+                        <button type="button" class="tbtn tbtn-pause" data-action="pause" data-talk="33">⏸ השהה</button>
+                        <button type="button" class="tbtn tbtn-reset" data-action="reset" data-talk="33">⟲ איפוס</button>
+                    </div>
+                </div>
+                <div class="timer-progress" aria-hidden="true"><div id="timer_bar_33"></div></div>
+        
+            </div>
+
+            <div class="stats">
+                <div class="stats-item">
+                    <strong>34</strong>
+                    <span>Presentations</span>
+                </div>
+                <div class="stats-item">
+                    <strong>1</strong>
+                    <span>Break</span>
+                </div>
+                <div class="stats-item">
+                    <strong>08:30 - 11:45</strong>
+                    <span>Duration</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        (function () {
+            const STORAGE_KEY = 'program_active_talk_index_v1';
+            const talks = Array.from(document.querySelectorAll('.session:not(.industry):not(.break)'));
+            const statusEl = document.getElementById('navStatus');
+            const btnPrev = document.getElementById('btnPrev');
+            const btnNext = document.getElementById('btnNext');
+            const btnClear = document.getElementById('btnClear');
+
+            function clamp(i) {
+                if (talks.length === 0) return -1;
+                return Math.max(0, Math.min(talks.length - 1, i));
+            }
+
+            function updateStatus(activeIndex) {
+                if (!statusEl) return;
+                if (activeIndex < 0 || talks.length === 0) {
+                    statusEl.textContent = `— / ${talks.length}`;
+                    return;
+                }
+                statusEl.textContent = `${activeIndex + 1} / ${talks.length}`;
+            }
+
+            function clearActive() {
+                talks.forEach(t => t.classList.remove('talk-active', 'talk-done'));
+                localStorage.removeItem(STORAGE_KEY);
+                updateStatus(-1);
+            }
+
+            function setActive(index, opts = { scroll: true }) {
+                if (talks.length === 0) return;
+                const i = clamp(index);
+
+                talks.forEach((t, idx) => {
+                    t.classList.toggle('talk-active', idx === i);
+                    t.classList.toggle('talk-done', idx < i);
+                });
+
+                localStorage.setItem(STORAGE_KEY, String(i));
+                updateStatus(i);
+
+                if (opts.scroll) {
+                    talks[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+
+            function getSavedIndex() {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                const n = raw === null ? NaN : parseInt(raw, 10);
+                return Number.isFinite(n) ? n : -1;
+            }
+
+            // click-to-select any talk
+            talks.forEach((t, idx) => {
+                t.style.cursor = 'pointer';
+                t.addEventListener('click', () => setActive(idx));
+            });
+
+            // controls
+            if (btnPrev) btnPrev.addEventListener('click', () => setActive((getSavedIndex() < 0 ? 0 : getSavedIndex()) - 1));
+            if (btnNext) btnNext.addEventListener('click', () => setActive((getSavedIndex() < 0 ? 0 : getSavedIndex()) + 1));
+            if (btnClear) btnClear.addEventListener('click', () => clearActive());
+
+            // keyboard: ArrowLeft/Right, PageUp/PageDown
+            document.addEventListener('keydown', (e) => {
+                if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+                if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+                    e.preventDefault();
+                    setActive((getSavedIndex() < 0 ? 0 : getSavedIndex()) + 1);
+                } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                    e.preventDefault();
+                    setActive((getSavedIndex() < 0 ? 0 : getSavedIndex()) - 1);
+                }
+            });
+
+            // init
+            const saved = getSavedIndex();
+            updateStatus(saved);
+            if (saved >= 0) setActive(saved, { scroll: false });
+
+            // expose for timer start (optional)
+            window.__programSetActive = setActive;
+        })();
+    </script>
+
+    <script>
+        (function () {
+            // One timer at a time
+            const timers = new Map(); // talkIndex -> state
+            let runningTalk = null;
+            let tickHandle = null;
+
+            function pad(n) { return String(n).padStart(2, '0'); }
+            function fmt(secs) {
+                const s = Math.max(0, secs);
+                const m = Math.floor(s / 60);
+                const r = s % 60;
+                return `${pad(m)}:${pad(r)}`;
+            }
+
+            // Web Audio (offline, no files)
+            let audioCtx = null;
+            function ensureAudio() {
+                if (!audioCtx) {
+                    const Ctx = window.AudioContext || window.webkitAudioContext;
+                    if (Ctx) audioCtx = new Ctx();
+                }
+                if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+            }
+            function tone(freq, durationMs, type = 'sine', gain = 0.12) {
+                if (!audioCtx) return;
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const g = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, now);
+                g.gain.setValueAtTime(0.0001, now);
+                g.gain.exponentialRampToValueAtTime(gain, now + 0.01);
+                g.gain.exponentialRampToValueAtTime(0.0001, now + (durationMs / 1000));
+                osc.connect(g);
+                g.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + (durationMs / 1000) + 0.02);
+            }
+            function beep() {
+                ensureAudio();
+                tone(880, 140, 'square', 0.08);
+            }
+            function gongHit(withEcho = true) {
+                ensureAudio();
+                if (!audioCtx) return;
+
+                const now = audioCtx.currentTime;
+
+                // Echo / "room" effect (delay + feedback)
+                let out = audioCtx.destination;
+                let wetGain = null;
+                if (withEcho) {
+                    const dry = audioCtx.createGain();
+                    const wet = audioCtx.createGain();
+                    dry.gain.setValueAtTime(0.55, now);
+                    wet.gain.setValueAtTime(0.95, now);
+
+                    const delay = audioCtx.createDelay(2.0);
+                    delay.delayTime.setValueAtTime(0.23, now);
+
+                    const feedback = audioCtx.createGain();
+                    feedback.gain.setValueAtTime(0.55, now);
+
+                    // feedback loop
+                    delay.connect(feedback);
+                    feedback.connect(delay);
+
+                    // Wet path to output
+                    wet.connect(out);
+                    delay.connect(wet);
+
+                    // We'll connect oscillators to both dry and delay
+                    out = dry; // return dry as "main" output (we'll connect it later)
+                    wetGain = delay;
+                    dry.connect(audioCtx.destination);
+                }
+
+                function hitTone(freq, durationMs, gain) {
+                    const osc = audioCtx.createOscillator();
+                    const g = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, now);
+
+                    // louder, gong-like envelope
+                    g.gain.setValueAtTime(0.0001, now);
+                    g.gain.exponentialRampToValueAtTime(gain, now + 0.01);
+                    g.gain.exponentialRampToValueAtTime(0.0001, now + (durationMs / 1000));
+
+                    osc.connect(g);
+                    // dry
+                    g.connect(out);
+                    // wet (echo)
+                    if (wetGain) g.connect(wetGain);
+                    osc.start(now);
+                    osc.stop(now + (durationMs / 1000) + 0.05);
+                }
+
+                // layered partials for a gong hit (louder + longer)
+                hitTone(196, 2600, 0.22);
+                setTimeout(() => hitTone(293, 2100, 0.14), 30);
+                setTimeout(() => hitTone(392, 1600, 0.10), 70);
+            }
+
+            function gong() {
+                // Loud 3x repeating gong with echo
+                ensureAudio();
+                const gapsMs = [0, 1200, 2400];
+                gapsMs.forEach((t) => setTimeout(() => gongHit(true), t));
+            }
+
+            function getTalkEl(talkIndex) {
+                return document.querySelector(`.session[data-talk-index="${talkIndex}"]`);
+            }
+            function getDuration(talkIndex) {
+                const el = getTalkEl(talkIndex);
+                const d = el ? parseInt(el.dataset.durationSeconds || '300', 10) : 300;
+                return Number.isFinite(d) ? d : 300;
+            }
+            function getState(talkIndex) {
+                if (!timers.has(talkIndex)) {
+                    timers.set(talkIndex, {
+                        talkIndex,
+                        duration: getDuration(talkIndex),
+                        remaining: getDuration(talkIndex),
+                        running: false,
+                        lastWhole: null,
+                        beeped: new Set(),
+                    });
+                }
+                return timers.get(talkIndex);
+            }
+
+            function updateUI(state) {
+                const display = document.getElementById(`timer_display_${state.talkIndex}`);
+                const bar = document.getElementById(`timer_bar_${state.talkIndex}`);
+                const el = getTalkEl(state.talkIndex);
+                if (display) display.textContent = fmt(state.remaining);
+                if (bar) {
+                    const pct = ((state.duration - state.remaining) / state.duration) * 100;
+                    bar.style.width = `${Math.max(0, Math.min(100, pct))}%`;
+                }
+                if (el) {
+                    el.classList.toggle('timer-warning', state.remaining <= 60 && state.remaining > 0);
+                    el.classList.toggle('timer-overtime', state.remaining <= 0);
+                }
+            }
+
+            function stopTicker() {
+                if (tickHandle) {
+                    clearInterval(tickHandle);
+                    tickHandle = null;
+                }
+            }
+
+            function pause(talkIndex) {
+                const state = getState(talkIndex);
+                state.running = false;
+                if (runningTalk === talkIndex) {
+                    runningTalk = null;
+                    stopTicker();
+                }
+                updateUI(state);
+            }
+
+            function reset(talkIndex) {
+                const state = getState(talkIndex);
+                pause(talkIndex);
+                state.duration = getDuration(talkIndex);
+                state.remaining = state.duration;
+                state.lastWhole = null;
+                state.beeped.clear();
+                updateUI(state);
+            }
+
+            function start(talkIndex) {
+                ensureAudio();
+                // stop any other
+                if (runningTalk !== null && runningTalk !== talkIndex) {
+                    pause(runningTalk);
+                }
+                runningTalk = talkIndex;
+                const state = getState(talkIndex);
+                state.running = true;
+
+                // Optional: sync with program highlight
+                try {
+                    if (typeof window.__programSetActive === 'function') {
+                        window.__programSetActive(talkIndex, { scroll: true });
+                    }
+                } catch (_) {}
+
+                // Use wall clock to avoid drift
+                const startRemaining = state.remaining;
+                const startAt = performance.now();
+
+                stopTicker();
+                tickHandle = setInterval(() => {
+                    if (!state.running) return;
+                    const elapsed = Math.floor((performance.now() - startAt) / 1000);
+                    const newRemaining = startRemaining - elapsed;
+                    const whole = newRemaining;
+
+                    // Beeps at 4:00, 3:00, 2:00, 1:00 remaining
+                    const beepMarks = [180, 120, 60];
+                    if (state.lastWhole === null || whole !== state.lastWhole) {
+                        if (beepMarks.includes(whole) && !state.beeped.has(whole)) {
+                            state.beeped.add(whole);
+                            beep();
+                        }
+                        if (whole === 0) {
+                            gong();
+                            state.running = false;
+                            runningTalk = null;
+                            stopTicker();
+                        }
+                        state.lastWhole = whole;
+                    }
+
+                    state.remaining = Math.max(0, newRemaining);
+                    updateUI(state);
+                }, 250);
+                updateUI(state);
+            }
+
+            // Wire up buttons
+            document.addEventListener('click', (e) => {
+                const btn = e.target && e.target.closest && e.target.closest('button[data-action][data-talk]');
+                if (!btn) return;
+                const action = btn.dataset.action;
+                const talkIndex = parseInt(btn.dataset.talk, 10);
+                if (!Number.isFinite(talkIndex)) return;
+
+                if (action === 'start') start(talkIndex);
+                if (action === 'pause') pause(talkIndex);
+                if (action === 'reset') reset(talkIndex);
+            });
+
+            // Initialize all displays to 04:00
+            const talkEls = document.querySelectorAll('.session[data-talk-index]');
+            talkEls.forEach(el => {
+                const idx = parseInt(el.dataset.talkIndex, 10);
+                if (!Number.isFinite(idx)) return;
+                const s = getState(idx);
+                updateUI(s);
+            });
+        })();
+    </script>
+</body>
+</html>
