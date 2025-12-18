@@ -2586,8 +2586,8 @@
 
             <div class="presentation-card" id="presentation_9">
                 <div class="presentation-header">
-                    <div class="presentation-name">שיר זיו, שלו אלפסי</div>
-                    <div class="presentation-task">נושא: מעגלי ac מודל אורת קטן של טרנזיסטור</div>
+                    <div class="presentation-name">שיר זיו, שלו אלפסי, מיה הרפז</div>
+                    <div class="presentation-task">נושא: מעגלי ac- מודל אות קטן של טרנזיסטור</div>
                     <div class="presentation-time">09:30 - 09:35</div>
                 </div>
 
@@ -6111,7 +6111,7 @@
 
             <div class="presentation-card" id="presentation_24">
                 <div class="presentation-header">
-                    <div class="presentation-name">אביתר בבאי, לירן בדור, עמר אגא</div>
+                    <div class="presentation-name">עומר אגא</div>
                     <div class="presentation-task">נושא: שיטת תבנין</div>
                     <div class="presentation-time">10:55 - 11:00</div>
                 </div>
@@ -8666,20 +8666,17 @@
             const presentationCard = document.getElementById(presentationId);
             const scoreInputs = presentationCard.querySelectorAll('input[type="number"]:not([name*="notes"])');
             let total = 0;
-            let maxTotal = 0;
+            // maxTotal is already printed in HTML; we only update the live total number
             
             scoreInputs.forEach(input => {
                 if (input.name.includes('criteria')) {
                     total += parseInt(input.value) || 1;
-                    maxTotal += parseInt(input.max) || 10;
                 }
             });
             
             const totalScoreElement = document.getElementById(presentationId + '_total_score');
-            const totalElement = document.getElementById(presentationId + '_total');
             if (totalScoreElement) {
                 totalScoreElement.textContent = total;
-                totalElement.innerHTML = `סה"כ: <span>${total}</span> / ${maxTotal}`;
             }
         }
         
